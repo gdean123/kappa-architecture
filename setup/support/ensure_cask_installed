@@ -1,0 +1,9 @@
+ensure_cask_installed() {
+    CASK_TO_INSTALL=$1
+    
+    if brew cask ls --versions ${CASK_TO_INSTALL} > /dev/null; then
+        echo "The cask ${CASK_TO_INSTALL} is already installed"
+    else
+        brew cask install "${CASK_TO_INSTALL}"
+    fi
+}

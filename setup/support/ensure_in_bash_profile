@@ -1,0 +1,7 @@
+ensure_in_bash_profile() {
+    LINE=$1
+    FILE=~/.bash_profile
+    
+    touch "${FILE}"
+    grep -q "${LINE}" "${FILE}" || echo "${LINE}" >> "${FILE}"
+}
