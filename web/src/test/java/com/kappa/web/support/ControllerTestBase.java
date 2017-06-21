@@ -20,4 +20,8 @@ public abstract class ControllerTestBase extends SpringTestBase {
     protected String get(String url) throws Exception {
         return mvc.perform(MockMvcRequestBuilders.get(url)).andReturn().getResponse().getContentAsString();
     }
+
+    protected String post(String url) throws Exception {
+        return mvc.perform(MockMvcRequestBuilders.post(url)).andReturn().getResponse().getContentAsString();
+    }
 }

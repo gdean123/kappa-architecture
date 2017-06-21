@@ -2,4 +2,5 @@
 .gradle
 .idea
 /web/build/
+/web/classes/
 *.iml
