@@ -1,8 +1,8 @@
 kafka:
-  url: http://localhost:9092
+  url: ${KAFKA_URL}
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/kappa_architecture_development
+    url: ${DATABASE_URL}
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

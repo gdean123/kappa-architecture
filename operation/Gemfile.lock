@@ -1,12 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    dotenv (2.2.1)
     thor (0.19.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   thor
 
 RUBY VERSION
