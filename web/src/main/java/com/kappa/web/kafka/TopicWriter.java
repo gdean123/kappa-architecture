@@ -16,7 +16,7 @@ import java.util.Map;
 public class TopicWriter {
     private String kafkaUrl;
 
-    TopicWriter(@Value("${kafka.url}") String kafkaUrl) {
+    public TopicWriter(@Value("${kafka.url}") String kafkaUrl) {
         this.kafkaUrl = kafkaUrl;
     }
 
