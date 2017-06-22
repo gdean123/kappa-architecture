@@ -1,22 +1,19 @@
 require 'thor'
 
-require_relative 'tools/gradle'
-require_relative 'support/paths'
-require_relative 'support/environment_variables'
 require_relative 'subcommands/topics'
 require_relative 'subcommands/database'
+require_relative '../domain/test/run_all_tests'
+require_relative '../domain/web_server/launch_web_server'
 
 class Cli < Thor
   desc 'test', 'Run java tests'
   def test
-    EnvironmentVariables.load('test')
-    Dir.chdir(Paths.web) { Gradle.test }
+    RunAllTests.execute
   end
 
   desc 'launch', 'Run server'
   def launch
-    EnvironmentVariables.load('development')
-    Dir.chdir(Paths.web) { Gradle.boot_run }
+    LaunchWebServer.execute
   end
 
   desc 'topics', 'Manage kafka topics'

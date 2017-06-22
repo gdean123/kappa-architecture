@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'thor'
-require_relative '../src/cli.rb'
+require_relative '../src/cli/cli.rb'
 
 Cli.start(ARGV)

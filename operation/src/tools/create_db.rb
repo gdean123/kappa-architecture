@@ -1,4 +1,4 @@
-require_relative '../support/system'
+require_relative '../domain/file_system/system'
 
 module CreateDb
   def self.create(database_name)
