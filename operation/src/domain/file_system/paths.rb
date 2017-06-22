@@ -6,4 +6,12 @@ module Paths
   def self.web
     "#{root}/web"
   end
+
+  def self.runtime_tools
+    "#{root}/runtime/tools"
+  end
+
+  def self.runtime_cache
+    "#{root}/runtime/cache"
+  end
 end
