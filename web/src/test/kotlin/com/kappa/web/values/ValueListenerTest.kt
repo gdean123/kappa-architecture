@@ -16,7 +16,7 @@ import org.mockito.Captor
 import org.springframework.kafka.listener.MessageListener
 import javax.inject.Inject
 
-open class ValueListenerTest : SpringTestBase() {
+class ValueListenerTest : SpringTestBase() {
     @Inject private lateinit var valueRepository: ValueRepository
     private lateinit var mockTopicListener: TopicListener
     private lateinit var valueListener: ValueListener

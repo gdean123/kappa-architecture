@@ -14,7 +14,7 @@ import java.io.Closeable
 import java.util.HashMap
 
 @Component
-open class KafkaTopicListener(
+class KafkaTopicListener(
     @Value("\${kafka.url}") private val kafkaUrl: String
 ) : TopicListener, Closeable {
     private var container: KafkaMessageListenerContainer<Int, String>? = null

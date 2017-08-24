@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
-open class ValuesControllerTest: ControllerTestBase() {
+class ValuesControllerTest: ControllerTestBase() {
     @Inject private lateinit var valueRepository: ValueRepository
     private lateinit var topicWriter: TopicWriter
 
@@ -22,14 +22,17 @@ open class ValuesControllerTest: ControllerTestBase() {
 
     @Test
     fun `create writes hello world to the topic`() {
-        post("/")
+        val httpResponse = post("/", hashMapOf("name" to "Johnny"))
+        assertThat(httpResponse.statusCode).isEqualTo(202)
+
         verify(topicWriter).write("values-topic", 0, "Hello, World!")
     }
 
     @Test
     fun `get returns values from the database`() {
         valueRepository.save(Value("Hello, World!"))
-        val response = get("/")
-        assertThat(response).isEqualTo("[\"Hello, World!\"]")
+        val httpResponse = get("/")
+        assertThat(httpResponse.statusCode).isEqualTo(200)
+        assertThat(httpResponse.body?.get(0)?.asText()).isEqualTo("Hello, World!")
     }
 }

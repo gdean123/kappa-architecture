@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import java.util.HashMap
 
 @Component
-open class KafkaTopicWriter(
+class KafkaTopicWriter(
     @Value("\${kafka.url}") private val kafkaUrl: String
 ) : TopicWriter {
 

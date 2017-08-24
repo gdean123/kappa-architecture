@@ -1,21 +1,21 @@
 package com.kappa.web.values
 
 import com.kappa.web.kafka.TopicWriter
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
-open class ValuesController(
+class ValuesController(
     private val topicWriter: TopicWriter,
     private val valueRepository: ValueRepository
 ) {
-    @RequestMapping(value = "/", method = arrayOf(RequestMethod.POST))
+    @PostMapping("/")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     fun create() {
         topicWriter.write("values-topic", 0, "Hello, World!")
     }
 
-    @RequestMapping(value = "/", method = arrayOf(RequestMethod.GET))
+    @GetMapping("/")
     fun get(): List<String> {
         return valueRepository.findAll().map({ it.value })
     }

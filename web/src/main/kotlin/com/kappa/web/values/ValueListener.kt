@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 
 @Component
-open class ValueListener(
+class ValueListener(
     private val topicListener: TopicListener,
     private val valueRepository: ValueRepository
 ) {
