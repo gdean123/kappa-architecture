@@ -6,8 +6,8 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity(name = "values")
-class Value(
-    var value: String = "",
+data class Value(
+    var value: String,
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private var id: Long? = null
 )

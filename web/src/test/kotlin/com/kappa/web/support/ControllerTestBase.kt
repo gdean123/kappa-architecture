@@ -12,7 +12,7 @@ abstract class ControllerTestBase : SpringTestBase() {
         MockMvcRequestBuilders.get(url)
     )
 
-    protected fun post(url: String, body: HashMap<String, String>): HttpResponse = perform(
+    protected fun post(url: String, body: HashMap<String, Any>): HttpResponse = perform(
         MockMvcRequestBuilders.post(url)
             .contentType(MediaType.APPLICATION_JSON)
             .content(writeJson(body))
