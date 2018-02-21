@@ -3,6 +3,7 @@
 .idea
 /web/build/
 /web/classes/
+/web/out/
 /stream-processor/build
 /runtime/tools/
 /runtime/cache/

@@ -1,8 +1,2 @@
 kafka:
   url: ${KAFKA_URL}
-
-spring:
-  datasource:
-    url: ${DATABASE_URL}
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
