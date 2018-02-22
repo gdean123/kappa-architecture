@@ -7,6 +7,5 @@
 /operation/build/
 /operation/out/
 /stream-processor/build
-/runtime/tools/
-/runtime/cache/
+/runtime/
 *.iml

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+source ${ROOT_DIRECTORY}/setup/support/ensure_in_bash_profile
+
+ensure_in_bash_profile "export PATH=\$PATH:${ROOT_DIRECTORY}/runtime/bin"
+

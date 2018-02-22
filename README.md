@@ -1,16 +1,25 @@
 # kappa-architecture
 An experiment using immutable event logs, stream processors, and materialized views to achieve distributed functional reactive programming
 
-## Development
+## Installation
+
+Download confluent platform from `https://www.confluent.io/download` and move it into this directory:
+
+```
+tar -xvf ~/Downloads/confluent-oss-4.0.0-2.11.tar.gz
+mv confluent-4.0.0 ~/workspace/kappa-architecture/runtime
+```
 
 Use the workstation setup scripts to install the required dependencies (including the kappa command line interface):
 
 ```
 ./setup/kappa_cli
 ./setup/kafka
-./setup/postgres
+./setup/confluent_platform
 ...
 ```
+
+## Development
 
 Use the command line interface to operate the application. For example, to launch the development server:
 
@@ -33,3 +42,5 @@ Read all values in the values table:
 ```
 curl localhost:8080
 ```
+
+
