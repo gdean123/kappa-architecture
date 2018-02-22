@@ -4,6 +4,8 @@ SETUP_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source ${SETUP_DIRECTORY}/support/ensure_formula_installed
 
+ensure_formula_installed "zookeeper"
 ensure_formula_installed "kafka"
+
+brew services start zookeeper
 brew services start kafka
-zkserver start
