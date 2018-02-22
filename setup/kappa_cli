@@ -2,9 +2,4 @@
 
 ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-ln -fs $ROOT_DIRECTORY/operation/bin/kappa /usr/local/bin
-
-pushd $ROOT_DIRECTORY/operation > /dev/null
-    gem install bundler
-    bundle install
-popd > /dev/null
+echo "export PATH=\$PATH:$ROOT_DIRECTORY/operation/bin" >> ~/.bash_profile

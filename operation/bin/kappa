@@ -1,6 +1,5 @@
-#!/usr/bin/env ruby
+#!/bin/bash
 
-require 'thor'
-require_relative '../src/cli/cli.rb'
+ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
 
-Cli.start(ARGV)
+java -jar "${ROOT_DIRECTORY}/operation/build/lib/operation-1.0.0.jar" $@
