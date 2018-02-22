@@ -12,12 +12,9 @@ import picocli.CommandLine.*
         Topics.Destroy::class,
         Topics.Publish::class,
         Topics.Subscribe::class
-    ],
-    footer = [""]
+    ]
 )
-class Topics : Runnable {
-    override fun run() = usage(this, System.err)
-
+class Topics: Group() {
     @Command(name = "list", description = ["List all Kafka topics"])
     class List: Runnable {
         override fun run() = ManageTopics.list()

@@ -9,12 +9,9 @@ import picocli.CommandLine.*
     subcommands = [
         Start.Producer::class,
         Start.StreamProcessor::class
-    ],
-    footer = [""]
+    ]
 )
-class Start : Runnable {
-    override fun run() = usage(this, System.err)
-
+class Start: Group() {
     @Command(name = "producer", description = ["Start the producer"])
     class Producer: Runnable {
         override fun run() = StartApplication.producer()
