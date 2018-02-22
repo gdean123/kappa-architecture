@@ -7,7 +7,11 @@ import picocli.CommandLine.*
     name = "kappa",
     header = ["%nkappa command line interface%n"],
     footer = [""],
-    subcommands = [Kappa.Test::class, Start::class]
+    subcommands = [
+        Kappa.Test::class,
+        Start::class,
+        Topics::class
+    ]
 )
 class Kappa : Runnable {
     override fun run() = usage(this, System.err)
