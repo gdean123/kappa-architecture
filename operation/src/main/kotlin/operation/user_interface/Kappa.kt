@@ -14,6 +14,6 @@ class Kappa : Runnable {
 
     @Command(name = "test", description = ["Run all tests"])
     class Test : Runnable {
-        override fun run() = RunTests.execute()
+        override fun run() = RunTests.producer()
     }
 }

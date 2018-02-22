@@ -1,12 +1,15 @@
 package operation.user_interface
 
-import operation.domain.StartProducer
+import operation.domain.StartApplication
 import picocli.CommandLine.*
 
 @Command(
     name = "start",
     description = ["Start services"],
-    subcommands = [Start.Producer::class],
+    subcommands = [
+        Start.Producer::class,
+        Start.StreamProcessor::class
+    ],
     footer = [""]
 )
 class Start : Runnable {
@@ -14,6 +17,11 @@ class Start : Runnable {
 
     @Command(name = "producer", description = ["Start the producer"])
     class Producer: Runnable {
-        override fun run() = StartProducer.execute()
+        override fun run() = StartApplication.producer()
+    }
+
+    @Command(name = "stream-processor", description = ["Start the stream processor"])
+    class StreamProcessor: Runnable {
+        override fun run() = StartApplication.streamProcessor()
     }
 }
