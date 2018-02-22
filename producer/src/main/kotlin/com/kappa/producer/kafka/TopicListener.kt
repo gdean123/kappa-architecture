@@ -1,4 +1,4 @@
-package com.kappa.web.kafka
+package com.kappa.producer.kafka
 
 import org.springframework.kafka.listener.MessageListener
 

@@ -1,4 +1,4 @@
-package com.kappa.web.kafka
+package com.kappa.producer.kafka
 
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.IntegerSerializer

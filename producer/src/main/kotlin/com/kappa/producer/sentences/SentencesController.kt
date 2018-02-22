@@ -1,6 +1,6 @@
-package com.kappa.web.sentences
+package com.kappa.producer.sentences
 
-import com.kappa.web.kafka.TopicWriter
+import com.kappa.producer.kafka.TopicWriter
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

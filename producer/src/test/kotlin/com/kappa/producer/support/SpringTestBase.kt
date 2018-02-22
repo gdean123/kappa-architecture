@@ -1,4 +1,4 @@
-package com.kappa.web.support
+package com.kappa.producer.support
 
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest

@@ -1,4 +1,4 @@
-package com.kappa.web.support
+package com.kappa.producer.support
 
 import org.junit.After
 import org.junit.Before

@@ -1,6 +1,6 @@
-package com.kappa.web.kafka
+package com.kappa.producer.kafka
 
-import com.kappa.web.support.KafkaTestBase
+import com.kappa.producer.support.KafkaTestBase
 import junit.framework.TestCase.assertTrue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before

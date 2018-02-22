@@ -1,9 +1,9 @@
 .DS_Store
 .gradle
 .idea
-/web/build/
-/web/classes/
-/web/out/
+/producer/build/
+/producer/classes/
+/producer/out/
 /operation/build/
 /operation/out/
 /stream-processor/build

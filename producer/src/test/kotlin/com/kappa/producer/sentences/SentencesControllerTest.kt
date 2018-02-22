@@ -1,7 +1,7 @@
-package com.kappa.web.sentences
+package com.kappa.producer.sentences
 
-import com.kappa.web.kafka.TopicWriter
-import com.kappa.web.support.ControllerTestBase
+import com.kappa.producer.kafka.TopicWriter
+import com.kappa.producer.support.ControllerTestBase
 import com.nhaarman.mockito_kotlin.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
