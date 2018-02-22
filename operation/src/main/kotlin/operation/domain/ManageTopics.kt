@@ -1,5 +1,7 @@
 package operation.domain
 
+import operation.tools.KafkaConsoleConsumer
+import operation.tools.KafkaConsoleProducer
 import operation.tools.KafkaTopics
 
 object ManageTopics {
@@ -15,5 +17,13 @@ object ManageTopics {
     fun destroy() {
         KafkaTopics.delete("streams-plaintext-input")
         KafkaTopics.delete("streams-wordcount-output")
+    }
+
+    fun publish() {
+        KafkaConsoleProducer.publish("streams-plaintext-input")
+    }
+
+    fun subscribe() {
+        KafkaConsoleConsumer.subscribe("streams-wordcount-output")
     }
 }
