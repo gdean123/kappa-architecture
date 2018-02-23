@@ -9,7 +9,8 @@ import picocli.CommandLine.*
     subcommands = [
         Kappa.Test::class,
         Start::class,
-        Topics::class
+        Topics::class,
+        Runtime::class
     ]
 )
 class Kappa: Group() {
