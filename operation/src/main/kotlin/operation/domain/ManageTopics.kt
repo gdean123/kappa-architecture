@@ -10,17 +10,19 @@ object ManageTopics {
     }
 
     fun create() {
-        KafkaTopics.create("streams-plaintext-input")
+        KafkaTopics.create("sentence-created")
         KafkaTopics.create("streams-wordcount-output")
     }
 
     fun destroy() {
-        KafkaTopics.delete("streams-plaintext-input")
+        KafkaTopics.delete("sentence-created")
+        KafkaTopics.delete("streams-wordcount-KSTREAM-AGGREGATE-STATE-STORE-0000000003-changelog")
+        KafkaTopics.delete("streams-wordcount-KSTREAM-AGGREGATE-STATE-STORE-0000000003-repartition")
         KafkaTopics.delete("streams-wordcount-output")
     }
 
     fun publish() {
-        KafkaConsoleProducer.publish("streams-plaintext-input")
+        KafkaConsoleProducer.publish("sentence-created")
     }
 
     fun subscribe() {
