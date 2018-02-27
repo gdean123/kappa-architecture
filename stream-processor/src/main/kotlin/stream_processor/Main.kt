@@ -1,37 +1,58 @@
 package stream_processor
 
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroDeserializer
+import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerializer
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.Serde
 import org.apache.kafka.common.serialization.Serdes
-import org.apache.kafka.streams.KafkaStreams
-import org.apache.kafka.streams.StreamsBuilder
-import org.apache.kafka.streams.StreamsConfig
-import org.apache.kafka.streams.Topology
+import org.apache.kafka.streams.*
 import org.apache.kafka.streams.kstream.Produced
+import org.apache.kafka.streams.kstream.Serialized
+import producer.SentenceCreatedKey
+import producer.SentenceCreatedValue
 import java.util.*
 import java.util.concurrent.CountDownLatch
 
 fun main(arguments: Array<String>) {
     val streamBuilder = StreamsBuilder()
-    val source = streamBuilder.stream<String, String>("streams-plaintext-input")
+    val source = streamBuilder.stream<SentenceCreatedKey, SentenceCreatedValue>("sentence-created", Consumed.with(sentenceCreatedKeyDeserializer(), sentenceCreatedValueDeserializer()))
 
     val counts = source
         .flatMapValues { line -> split(line) }
-        .groupBy { _, value -> value }
+        .map { _, word -> KeyValue(WordCountKey(word), word) }
+        .groupByKey(Serialized.with(wordCountKeySerializer(), Serdes.String()))
         .count()
-        .mapValues { count -> WordCount("some-word", count) }
+        .toStream()
+        .map { wordCountKey, count -> KeyValue(wordCountKey, WordCountValue(wordCountKey.getWord(), count)) }
 
-    counts.toStream().to("streams-wordcount-output", Produced.with(Serdes.String(), wordCountSerializer()))
+    counts.to("streams-wordcount-output", Produced.with(wordCountKeySerializer(), wordCountValueSerializer()))
     run(streamBuilder.build())
 }
 
-private fun split(value: String) =
-    Arrays.asList(*value.toLowerCase(Locale.getDefault()).split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+private fun split(value: SentenceCreatedValue) =
+    Arrays.asList(*value.getSentence().toLowerCase(Locale.getDefault()).split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
 
-private fun wordCountSerializer(): Serde<WordCount>? {
-    val valueSerde = Serdes.serdeFrom(SpecificAvroSerializer<WordCount>(), SpecificAvroDeserializer<WordCount>())
+private fun sentenceCreatedKeyDeserializer(): Serde<SentenceCreatedKey> {
+    val keySerde = Serdes.serdeFrom(SpecificAvroSerializer<SentenceCreatedKey>(), SpecificAvroDeserializer<SentenceCreatedKey>())
+    keySerde.configure(mapOf("schema.registry.url" to "http://localhost:8081"), true)
+    return keySerde
+}
+
+private fun sentenceCreatedValueDeserializer(): Serde<SentenceCreatedValue> {
+    val valueSerde = Serdes.serdeFrom(SpecificAvroSerializer<SentenceCreatedValue>(), SpecificAvroDeserializer<SentenceCreatedValue>())
+    valueSerde.configure(mapOf("schema.registry.url" to "http://localhost:8081"), false)
+    return valueSerde
+}
+
+private fun wordCountKeySerializer(): Serde<WordCountKey> {
+    val keySerde = Serdes.serdeFrom(SpecificAvroSerializer<WordCountKey>(), SpecificAvroDeserializer<WordCountKey>())
+    keySerde.configure(mapOf("schema.registry.url" to "http://localhost:8081"), true)
+    return keySerde
+}
+
+private fun wordCountValueSerializer(): Serde<WordCountValue> {
+    val valueSerde = Serdes.serdeFrom(SpecificAvroSerializer<WordCountValue>(), SpecificAvroDeserializer<WordCountValue>())
     valueSerde.configure(mapOf("schema.registry.url" to "http://localhost:8081"), false)
     return valueSerde
 }
@@ -60,8 +81,9 @@ private fun properties(): Properties {
     properties.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-wordcount")
     properties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
     properties.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0)
-    properties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().javaClass.name)
-    properties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().javaClass.name)
+    properties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, SpecificAvroSerde::class.java)
+    properties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, SpecificAvroSerde::class.java)
     properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
+    properties.put("schema.registry.url", "http://localhost:8081")
     return properties
 }

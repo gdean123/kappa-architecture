@@ -9,11 +9,11 @@ import org.apache.avro.specific.SpecificData;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public class WordCount extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 6991558532619717529L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"WordCount\",\"namespace\":\"stream_processor\",\"fields\":[{\"name\":\"word\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"count\",\"type\":\"long\"}]}");
+public class WordCountValue extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -6608342524847116486L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"WordCountValue\",\"namespace\":\"stream_processor\",\"fields\":[{\"name\":\"word\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"count\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
-  @Deprecated public java.lang.String word;
+  @Deprecated public String word;
   @Deprecated public long count;
 
   /**
@@ -21,21 +21,21 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public WordCount() {}
+  public WordCountValue() {}
 
   /**
    * All-args constructor.
    * @param word The new value for word
    * @param count The new value for count
    */
-  public WordCount(java.lang.String word, java.lang.Long count) {
+  public WordCountValue(String word, Long count) {
     this.word = word;
     this.count = count;
   }
 
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
-  public java.lang.Object get(int field$) {
+  public Object get(int field$) {
     switch (field$) {
     case 0: return word;
     case 1: return count;
@@ -45,10 +45,10 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
 
   // Used by DatumReader.  Applications should not call.
   @SuppressWarnings(value="unchecked")
-  public void put(int field$, java.lang.Object value$) {
+  public void put(int field$, Object value$) {
     switch (field$) {
-    case 0: word = (java.lang.String)value$; break;
-    case 1: count = (java.lang.Long)value$; break;
+    case 0: word = (String)value$; break;
+    case 1: count = (Long)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -57,7 +57,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'word' field.
    * @return The value of the 'word' field.
    */
-  public java.lang.String getWord() {
+  public String getWord() {
     return word;
   }
 
@@ -65,7 +65,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
    * Sets the value of the 'word' field.
    * @param value the value to set.
    */
-  public void setWord(java.lang.String value) {
+  public void setWord(String value) {
     this.word = value;
   }
 
@@ -73,7 +73,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'count' field.
    * @return The value of the 'count' field.
    */
-  public java.lang.Long getCount() {
+  public Long getCount() {
     return count;
   }
 
@@ -81,43 +81,43 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
    * Sets the value of the 'count' field.
    * @param value the value to set.
    */
-  public void setCount(java.lang.Long value) {
+  public void setCount(Long value) {
     this.count = value;
   }
 
   /**
-   * Creates a new WordCount RecordBuilder.
-   * @return A new WordCount RecordBuilder
+   * Creates a new WordCountValue RecordBuilder.
+   * @return A new WordCountValue RecordBuilder
    */
-  public static stream_processor.WordCount.Builder newBuilder() {
-    return new stream_processor.WordCount.Builder();
+  public static Builder newBuilder() {
+    return new Builder();
   }
 
   /**
-   * Creates a new WordCount RecordBuilder by copying an existing Builder.
+   * Creates a new WordCountValue RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new WordCount RecordBuilder
+   * @return A new WordCountValue RecordBuilder
    */
-  public static stream_processor.WordCount.Builder newBuilder(stream_processor.WordCount.Builder other) {
-    return new stream_processor.WordCount.Builder(other);
+  public static Builder newBuilder(Builder other) {
+    return new Builder(other);
   }
 
   /**
-   * Creates a new WordCount RecordBuilder by copying an existing WordCount instance.
+   * Creates a new WordCountValue RecordBuilder by copying an existing WordCountValue instance.
    * @param other The existing instance to copy.
-   * @return A new WordCount RecordBuilder
+   * @return A new WordCountValue RecordBuilder
    */
-  public static stream_processor.WordCount.Builder newBuilder(stream_processor.WordCount other) {
-    return new stream_processor.WordCount.Builder(other);
+  public static Builder newBuilder(WordCountValue other) {
+    return new Builder(other);
   }
 
   /**
-   * RecordBuilder for WordCount instances.
+   * RecordBuilder for WordCountValue instances.
    */
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<WordCount>
-    implements org.apache.avro.data.RecordBuilder<WordCount> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<WordCountValue>
+    implements org.apache.avro.data.RecordBuilder<WordCountValue> {
 
-    private java.lang.String word;
+    private String word;
     private long count;
 
     /** Creates a new Builder */
@@ -129,7 +129,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(stream_processor.WordCount.Builder other) {
+    private Builder(Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.word)) {
         this.word = data().deepCopy(fields()[0].schema(), other.word);
@@ -142,10 +142,10 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
     }
 
     /**
-     * Creates a Builder by copying an existing WordCount instance
+     * Creates a Builder by copying an existing WordCountValue instance
      * @param other The existing instance to copy.
      */
-    private Builder(stream_processor.WordCount other) {
+    private Builder(WordCountValue other) {
             super(SCHEMA$);
       if (isValidValue(fields()[0], other.word)) {
         this.word = data().deepCopy(fields()[0].schema(), other.word);
@@ -161,7 +161,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
       * Gets the value of the 'word' field.
       * @return The value.
       */
-    public java.lang.String getWord() {
+    public String getWord() {
       return word;
     }
 
@@ -170,7 +170,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'word'.
       * @return This builder.
       */
-    public stream_processor.WordCount.Builder setWord(java.lang.String value) {
+    public Builder setWord(String value) {
       validate(fields()[0], value);
       this.word = value;
       fieldSetFlags()[0] = true;
@@ -190,7 +190,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
       * Clears the value of the 'word' field.
       * @return This builder.
       */
-    public stream_processor.WordCount.Builder clearWord() {
+    public Builder clearWord() {
       word = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -200,7 +200,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
       * Gets the value of the 'count' field.
       * @return The value.
       */
-    public java.lang.Long getCount() {
+    public Long getCount() {
       return count;
     }
 
@@ -209,7 +209,7 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
       * @param value The value of 'count'.
       * @return This builder.
       */
-    public stream_processor.WordCount.Builder setCount(long value) {
+    public Builder setCount(long value) {
       validate(fields()[1], value);
       this.count = value;
       fieldSetFlags()[1] = true;
@@ -229,17 +229,17 @@ public class WordCount extends org.apache.avro.specific.SpecificRecordBase imple
       * Clears the value of the 'count' field.
       * @return This builder.
       */
-    public stream_processor.WordCount.Builder clearCount() {
+    public Builder clearCount() {
       fieldSetFlags()[1] = false;
       return this;
     }
 
     @Override
-    public WordCount build() {
+    public WordCountValue build() {
       try {
-        WordCount record = new WordCount();
-        record.word = fieldSetFlags()[0] ? this.word : (java.lang.String) defaultValue(fields()[0]);
-        record.count = fieldSetFlags()[1] ? this.count : (java.lang.Long) defaultValue(fields()[1]);
+        WordCountValue record = new WordCountValue();
+        record.word = fieldSetFlags()[0] ? this.word : (String) defaultValue(fields()[0]);
+        record.count = fieldSetFlags()[1] ? this.count : (Long) defaultValue(fields()[1]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
