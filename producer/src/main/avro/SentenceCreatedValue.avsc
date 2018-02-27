@@ -1,0 +1,11 @@
+{
+    "namespace": "producer",
+    "type": "record",
+    "name": "SentenceCreatedValue",
+    "fields": [
+        {
+            "name": "sentence",
+            "type": "string"
+        }
+    ]
+}
