@@ -7,5 +7,6 @@
 /operation/build/
 /operation/out/
 /stream-processor/build
+/wordcount-stream-consumer/build/
 /runtime/
 *.iml
