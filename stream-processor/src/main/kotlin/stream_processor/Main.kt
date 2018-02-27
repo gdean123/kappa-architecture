@@ -1,14 +1,17 @@
 package stream_processor
 
-import java.util.concurrent.CountDownLatch
-import org.apache.kafka.streams.KafkaStreams
-import org.apache.kafka.common.serialization.Serdes
-import org.apache.kafka.streams.kstream.Produced
-import org.apache.kafka.streams.StreamsBuilder
+import io.confluent.kafka.streams.serdes.avro.SpecificAvroDeserializer
+import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerializer
 import org.apache.kafka.clients.consumer.ConsumerConfig
+import org.apache.kafka.common.serialization.Serde
+import org.apache.kafka.common.serialization.Serdes
+import org.apache.kafka.streams.KafkaStreams
+import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.StreamsConfig
 import org.apache.kafka.streams.Topology
+import org.apache.kafka.streams.kstream.Produced
 import java.util.*
+import java.util.concurrent.CountDownLatch
 
 fun main(arguments: Array<String>) {
     val streamBuilder = StreamsBuilder()
@@ -18,13 +21,20 @@ fun main(arguments: Array<String>) {
         .flatMapValues { line -> split(line) }
         .groupBy { _, value -> value }
         .count()
+        .mapValues { count -> WordCount("some-word", count) }
 
-    counts.toStream().to("streams-wordcount-output", Produced.with(Serdes.String(), Serdes.Long()))
+    counts.toStream().to("streams-wordcount-output", Produced.with(Serdes.String(), wordCountSerializer()))
     run(streamBuilder.build())
 }
 
 private fun split(value: String) =
     Arrays.asList(*value.toLowerCase(Locale.getDefault()).split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+
+private fun wordCountSerializer(): Serde<WordCount>? {
+    val valueSerde = Serdes.serdeFrom(SpecificAvroSerializer<WordCount>(), SpecificAvroDeserializer<WordCount>())
+    valueSerde.configure(mapOf("schema.registry.url" to "http://localhost:8081"), false)
+    return valueSerde
+}
 
 private fun run(stream: Topology) {
     val streams = KafkaStreams(stream, properties())
