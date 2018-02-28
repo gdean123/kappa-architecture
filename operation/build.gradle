@@ -37,6 +37,8 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     compile 'info.picocli:picocli:2.3.0'
+    compile 'org.apache.avro:avro-tools:1.8.2'
+    compile 'org.apache.avro:avro-compiler:1.5.0'
 }
 
 jar {
@@ -46,4 +48,8 @@ jar {
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
+}
+
+task avroTools() {
+    println project.configurations.compile.find { it.name.startsWith("avro-tools") }
 }

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+OPERATION_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+AVRO_JAR="$($OPERATION_DIRECTORY/gradlew avroTools --quiet --project-dir $OPERATION_DIRECTORY)"
+
+java -jar $AVRO_JAR $@
