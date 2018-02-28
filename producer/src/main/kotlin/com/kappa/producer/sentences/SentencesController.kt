@@ -18,6 +18,6 @@ class SentencesController(private val topicWriter: TopicWriter) {
         val key = SentenceCreatedKey(UUID.randomUUID().toString())
         val value = SentenceCreatedValue(createSentenceRequest.words)
 
-        topicWriter.write("sentence-created", key, value)
+        topicWriter.write("sentence_created", key, value)
     }
 }

@@ -30,12 +30,12 @@ class Topics: Group() {
         override fun run() = ManageTopics.destroy()
     }
 
-    @Command(name = "publish", description = ["Publish to the streams-plaintext-input Kafka topic"])
+    @Command(name = "publish", description = ["Publish to the sentence_created Kafka topic"])
     class Publish: Runnable {
         override fun run() = ManageTopics.publish()
     }
 
-    @Command(name = "subscribe", description = ["Subscribe to the streams-wordcount-output Kafka topic"])
+    @Command(name = "subscribe", description = ["Subscribe to the word_counts Kafka topic"])
     class Subscribe: Runnable {
         override fun run() = ManageTopics.subscribe()
     }

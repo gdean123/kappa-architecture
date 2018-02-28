@@ -13,7 +13,7 @@ import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
 
 fun main(arguments: Array<String>) {
     val streamBuilder = StreamsBuilder()
-    val source = streamBuilder.table<String, WordCount>("streams-wordcount-output")
+    val source = streamBuilder.table<String, WordCount>("word_counts")
 
     source.toStream()
         .foreach { key, value -> println("Parsing $key: $value") }

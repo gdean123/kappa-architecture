@@ -10,22 +10,22 @@ object ManageTopics {
     }
 
     fun create() {
-        KafkaTopics.create("sentence-created")
-        KafkaTopics.create("streams-wordcount-output")
+        KafkaTopics.create("sentence_created")
+        KafkaTopics.create("word_counts")
     }
 
     fun destroy() {
-        KafkaTopics.delete("sentence-created")
-        KafkaTopics.delete("streams-wordcount-KSTREAM-AGGREGATE-STATE-STORE-0000000003-changelog")
-        KafkaTopics.delete("streams-wordcount-KSTREAM-AGGREGATE-STATE-STORE-0000000003-repartition")
-        KafkaTopics.delete("streams-wordcount-output")
+        KafkaTopics.delete("sentence_created")
+        KafkaTopics.delete("sentence_created-KSTREAM-AGGREGATE-STATE-STORE-0000000003-changelog")
+        KafkaTopics.delete("sentence_created-KSTREAM-AGGREGATE-STATE-STORE-0000000003-repartition")
+        KafkaTopics.delete("word_counts")
     }
 
     fun publish() {
-        KafkaConsoleProducer.publish("sentence-created")
+        KafkaConsoleProducer.publish("sentence_created")
     }
 
     fun subscribe() {
-        KafkaConsoleConsumer.subscribe("streams-wordcount-output")
+        KafkaConsoleConsumer.subscribe("word_counts")
     }
 }

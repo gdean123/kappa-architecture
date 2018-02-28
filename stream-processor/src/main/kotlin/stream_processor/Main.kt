@@ -8,7 +8,7 @@ import java.util.*
 
 fun main(arguments: Array<String>) {
     StreamProcessor.run { streamBuilder, serializers ->
-        val source = streamBuilder.stream<SentenceCreatedKey, SentenceCreatedValue>("sentence-created")
+        val source = streamBuilder.stream<SentenceCreatedKey, SentenceCreatedValue>("sentence_created")
 
         val counts = source
             .flatMapValues { line -> split(line) }
@@ -18,7 +18,7 @@ fun main(arguments: Array<String>) {
             .toStream()
             .map { wordCountKey, count -> KeyValue(wordCountKey, WordCountValue(wordCountKey.getWord(), count)) }
 
-        counts.to("streams-wordcount-output")
+        counts.to("word_counts")
     }
 }
 
