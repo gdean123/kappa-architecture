@@ -1,5 +1,6 @@
 package com.kappa.producer.kafka
 
+import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
 import io.confluent.kafka.serializers.KafkaAvroSerializer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.springframework.beans.factory.annotation.Value
@@ -38,7 +39,7 @@ class KafkaTopicWriter(
         properties.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432)
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer::class.java)
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer::class.java)
-        properties.put("schema.registry.url", "http://localhost:8081")
+        properties.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081")
         return properties
     }
 }
