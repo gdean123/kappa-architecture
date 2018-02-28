@@ -10,6 +10,7 @@ import picocli.CommandLine.*
         Kappa.Test::class,
         Start::class,
         Topics::class,
+        Connectors::class,
         Runtime::class
     ]
 )
