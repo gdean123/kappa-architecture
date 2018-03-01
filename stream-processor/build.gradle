@@ -36,6 +36,10 @@ compileTestKotlin {
 	kotlinOptions.jvmTarget = "1.8"
 }
 
+sourceSets {
+    main.java.srcDirs += "$rootDir/src/gen/java"
+}
+
 repositories {
     mavenCentral()
     jcenter()

@@ -8,12 +8,14 @@ object Shell {
     }
 
     fun execute(command: List<String>, workingDirectory: File = Paths.root(), environmentVariables: Map<String, String> = emptyMap()) {
-        Log.info("Executing: ${command.joinToString(" ")}")
+        Log.info("[${workingDirectory.name}] Executing: ${command.joinToString(" ")}")
 
         val processBuilder = ProcessBuilder(command)
             .directory(workingDirectory).inheritIO()
 
         processBuilder.environment().putAll(environmentVariables)
         processBuilder.start().waitFor()
+
+        Log.newline()
     }
 }
