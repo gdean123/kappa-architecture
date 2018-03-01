@@ -9,6 +9,5 @@
 /operation/out/
 /stream-processor/build
 /stream-processor/src/gen/
-/wordcount-stream-consumer/build/
 /runtime/
 *.iml
