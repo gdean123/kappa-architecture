@@ -25,7 +25,7 @@ object ManageTopics {
         KafkaConsoleProducer.publish("sentence_created")
     }
 
-    fun subscribe() {
-        KafkaConsoleConsumer.subscribe("word_counts")
+    fun subscribe(topic: String) {
+        KafkaConsoleConsumer.subscribe(topic)
     }
 }

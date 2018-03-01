@@ -35,8 +35,9 @@ class Topics: Group() {
         override fun run() = ManageTopics.publish()
     }
 
-    @Command(name = "subscribe", description = ["Subscribe to the word_counts Kafka topic"])
+    @Command(name = "subscribe", description = ["Subscribe to a Kafka topic"])
     class Subscribe: Runnable {
-        override fun run() = ManageTopics.subscribe()
+        @Parameters(index = "0") var topic: String? = null
+        override fun run() = ManageTopics.subscribe(topic!!)
     }
 }
