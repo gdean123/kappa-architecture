@@ -1,0 +1,13 @@
+cask 'java'
+cask 'iterm2'
+cask 'textmate'
+cask 'shiftit'
+cask 'flycut'
+cask 'intellij-idea'
+cask 'docker'
+
+brew 'rbenv'
+brew 'jq'
+brew 'wget'
+brew 'tree'
+brew 'postgres', restart_service: :changed
