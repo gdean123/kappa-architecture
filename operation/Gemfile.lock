@@ -1,0 +1,16 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ejson (1.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ejson
+
+RUBY VERSION
+   ruby 2.5.0p0
+
+BUNDLED WITH
+   1.16.1
