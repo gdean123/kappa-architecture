@@ -10,37 +10,58 @@ tar -xvf ~/Downloads/confluent-oss-4.0.0-2.11.tar.gz
 mv confluent-4.0.0 ~/workspace/kappa-architecture/runtime
 ```
 
-Use the workstation setup scripts to install the required dependencies (including the kappa command line interface):
+Use the workstation setup script to install the required dependencies (including the kappa command line interface):
 
 ```
-./setup/kappa_cli
-./setup/kafka
-./setup/confluent_platform
-...
+./setup/install
+```
+
+Create a postgres database into which we can materialize a view:
+
+```
+createdb consumer_development
 ```
 
 ## Development
 
-Use the command line interface to operate the application. For example, to launch the development server:
+Use the command line interface to operate the application. For example, to launch the producer service:
 
 ```
-kappa launch
+kappa start producer
 ```
+
+## Startup
+
+In three separate terminals:
+
+`kappa start producer` to launch the producer application
+`kappa start stream-processor` to launch the stream-processor application
+`kappa connectors load` to load the jdbc-sink Kafka Connect connector
 
 ## Usage
 
-Write a value to a kafka topic (values-topic):
+Use the producer to write a few sentences to the sentence_created kafka topic:
 
 ```
-curl -X POST localhost:8080
+curl -X POST localhost:8080/sentences -H "Content-Type: application/json" --data '{"words": "alpine rainbows"}'
+curl -X POST localhost:8080/sentences -H "Content-Type: application/json" --data '{"words": "rainbows and sheep"}'
 ```
 
-The ValueListener is listening to that topic and will save the new value into the values table.
+The stream-processor is listening to that topic and will write an updated set of word counts to the word_counts topic.
 
-Read all values in the values table:
+The jdbc-sink connector is listening to word_counts and will materialize that into a table in the consumer_development database.
 
 ```
-curl localhost:8080
+psql consumer_development
+
+consumer_development=# SELECT * FROM word_counts;
+ count |  word
+-------+---------
+     1 | alpine
+     2 | rainbows
+     1 | and
+     1 | sheep
+(4 rows)
 ```
 
 
