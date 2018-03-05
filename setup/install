@@ -8,6 +8,7 @@ main () {
         install_bash_it
         install_brew_bundle
         install_ruby
+        install_vim
     popd > /dev/null
 }
 
@@ -41,6 +42,15 @@ install_ruby () {
     rbenv install 2.5.0 --skip-existing
     rbenv local 2.5.0
     gem install bundler
+}
+
+install_vim () {
+    if [[ -d ~/.vim ]]; then
+        echo "The vim configuration is already setup."
+    else
+        git clone https://github.com/pivotal/vim-config.git ~/.vim
+        ~/.vim/bin/install
+    fi
 }
 
 main

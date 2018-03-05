@@ -6,6 +6,7 @@ cask 'flycut'
 cask 'intellij-idea'
 cask 'docker'
 
+brew 'vim'
 brew 'rbenv'
 brew 'jq'
 brew 'wget'
