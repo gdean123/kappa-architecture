@@ -14,7 +14,8 @@ import picocli.CommandLine.Command
         Topics::class,
         Connectors::class,
         Runtime::class,
-        Bindings::class
+        Bindings::class,
+        Configurations::class
     ]
 )
 class Kappa: Group() {
