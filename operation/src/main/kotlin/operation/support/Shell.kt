@@ -18,4 +18,12 @@ object Shell {
 
         Log.newline()
     }
+
+    fun capture(command: List<String>, workingDirectory: File = Paths.root()): String {
+        return ProcessBuilder(command)
+            .directory(workingDirectory)
+            .redirectOutput(ProcessBuilder.Redirect.PIPE)
+            .redirectError(ProcessBuilder.Redirect.PIPE)
+            .start().inputStream.bufferedReader().readText()
+    }
 }

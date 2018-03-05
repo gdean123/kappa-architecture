@@ -14,7 +14,8 @@ import java.util.HashMap
 
 @Component
 class KafkaTopicWriter(
-    @Value("\${kafka.url}") private val kafkaUrl: String
+    @Value("\${kafka.url}") private val kafkaUrl: String,
+    @Value("\${kafka.schemaRegistryUrl}") private val schemaRegistryUrl: String
 ) : TopicWriter {
 
     override fun write(topic: String, key: SentenceCreatedKey, value: SentenceCreatedValue) {
@@ -39,7 +40,7 @@ class KafkaTopicWriter(
         properties.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432)
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer::class.java)
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer::class.java)
-        properties.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081")
+        properties.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl)
         return properties
     }
 }
