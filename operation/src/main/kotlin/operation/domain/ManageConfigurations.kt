@@ -8,37 +8,28 @@ import java.io.File
 
 object ManageConfigurations {
     fun showAll() {
-        val applications = Paths.configuration().list()
-        applications.forEach { application -> printApplication(application) }
-    }
-
-    private fun printApplication(application: String) {
-        Log.info("--- $application ---")
-
-        val environments = File(Paths.configuration(), application).list()
-
-        environments.forEach { environment ->
-            printEnvironment(application, environment)
+        configurations().forEach { configuration ->
+            Log.info("${configuration.application} / ${configuration.environment} / ${configuration.target}")
+            configuration.environmentVariables.forEach { (key, value) -> println("$key = $value") }
+            Log.newline()
         }
     }
 
-    private fun printEnvironment(application: String, environment: String) {
-        val filenames = File(File(Paths.configuration(), application), environment).list()
-        val configurations = filenames.map { configuration -> FilenameUtils.removeExtension(configuration) }
+    private fun applications() = Paths.configuration().list()
 
-        configurations.forEach { configuration ->
-            printConfiguration(environment, configuration, application)
+    private fun configurations(): List<Configuration> {
+        return applications().flatMap { application ->
+            val environments = File(Paths.configuration(), application).list()
+
+            environments.flatMap { environment ->
+                val filenames = File(File(Paths.configuration(), application), environment).list()
+                val targets = filenames.map { configuration -> FilenameUtils.removeExtension(configuration) }
+
+                targets.map { target ->
+                    val environmentVariables = Environment.read(application, environment, target)
+                    Configuration(application, environment, target, environmentVariables)
+                }
+            }
         }
-    }
-
-    private fun printConfiguration(environment: String, configuration: String, application: String) {
-        Log.info("$environment ($configuration)")
-        val environmentVariables = Environment.read(application, environment, configuration)
-
-        environmentVariables.forEach { (key, value) ->
-            println("$key = $value")
-        }
-
-        Log.newline()
     }
 }
