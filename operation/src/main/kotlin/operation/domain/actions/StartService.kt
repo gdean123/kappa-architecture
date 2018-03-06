@@ -10,4 +10,7 @@ object StartService {
 
     fun streamProcessor() =
         Gradle.run(Paths.streamProcessor(), Environment.read("stream-processor", "development", "application"))
+
+    fun consumer() =
+        Gradle.bootRun(Paths.consumer(), Environment.read("consumer", "development", "application"))
 }

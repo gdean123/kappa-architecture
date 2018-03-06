@@ -17,6 +17,7 @@ object ManageBindings {
 
         generateBindings(Paths.producerContracts(), Paths.producerGen())
         generateBindings(Paths.streamProcessorContracts(), Paths.streamProcessorGen())
+        generateBindings(Paths.consumerContracts(), Paths.consumerGen())
 
         Log.success("Schema bindings generated")
     }

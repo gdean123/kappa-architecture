@@ -14,6 +14,10 @@ object Paths {
     fun streamProcessorContracts() = path("stream-processor/contracts")
     fun streamProcessorGen() = path("stream-processor/src/gen/java")
 
+    fun consumer() = path("consumer")
+    fun consumerContracts() = path("consumer/contracts")
+    fun consumerGen() = path("consumer/src/gen/java")
+
     private fun path(path: String) = File(root(), path)
     private fun jarFile() = File(this::class.java.protectionDomain.codeSource.location.toURI().path)
 }

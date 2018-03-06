@@ -9,5 +9,9 @@
 /operation/out/
 /stream-processor/build
 /stream-processor/src/gen/
+/consumer/build/
+/consumer/classes/
+/consumer/out/
+/consumer/src/gen/
 /runtime/
 *.iml

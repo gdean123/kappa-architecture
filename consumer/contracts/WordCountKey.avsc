@@ -1,0 +1,11 @@
+{
+    "namespace": "stream_processor",
+    "type": "record",
+    "name": "WordCountKey",
+    "fields": [
+        {
+            "name": "word",
+            "type": "string"
+        }
+    ]
+}
