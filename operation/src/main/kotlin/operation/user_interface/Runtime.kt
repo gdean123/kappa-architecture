@@ -1,6 +1,6 @@
 package operation.user_interface
 
-import operation.domain.ManageRuntime
+import operation.domain.actions.ManageRuntime
 import picocli.CommandLine.Command
 
 @Command(

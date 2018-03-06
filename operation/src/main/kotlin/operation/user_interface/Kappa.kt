@@ -1,7 +1,7 @@
 package operation.user_interface
 
-import operation.domain.BuildArtifact
-import operation.domain.RunTests
+import operation.domain.actions.BuildArtifact
+import operation.domain.actions.RunTests
 import picocli.CommandLine.Command
 
 @Command(

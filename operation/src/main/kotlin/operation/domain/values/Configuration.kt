@@ -1,4 +1,4 @@
-package operation.domain
+package operation.domain.values
 
 data class Configuration(
     val application: String,

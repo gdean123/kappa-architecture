@@ -1,6 +1,6 @@
 package operation.user_interface
 
-import operation.domain.ManageConnectors
+import operation.domain.actions.ManageConnectors
 import picocli.CommandLine.Command
 
 @Command(

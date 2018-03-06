@@ -1,4 +1,4 @@
-package operation.domain
+package operation.domain.actions
 
 import operation.support.Paths
 import operation.tools.Gradle

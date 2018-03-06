@@ -1,6 +1,6 @@
 package operation.user_interface
 
-import operation.domain.ManageBindings
+import operation.domain.actions.ManageBindings
 import picocli.CommandLine.Command
 
 @Command(

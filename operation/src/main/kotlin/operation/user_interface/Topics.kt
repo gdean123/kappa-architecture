@@ -1,6 +1,6 @@
 package operation.user_interface
 
-import operation.domain.ManageTopics
+import operation.domain.actions.ManageTopics
 import picocli.CommandLine.*
 
 @Command(
