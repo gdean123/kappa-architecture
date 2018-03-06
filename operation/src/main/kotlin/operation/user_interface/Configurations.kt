@@ -7,12 +7,18 @@ import picocli.CommandLine.Command
     name = "configurations",
     description = ["Manage configuration data"],
     subcommands = [
-        Configurations.Show::class
+        Configurations.Show::class,
+        Configurations.Encrypt::class
     ]
 )
 class Configurations : Group() {
-    @Command(name = "show", description = ["Show configuration for all applications and environments"])
+    @Command(name = "show", description = ["Show all configurations"])
     class Show: Runnable {
         override fun run() = ManageConfigurations.showAll()
+    }
+
+    @Command(name = "encrypt", description = ["Encrypt all configurations"])
+    class Encrypt: Runnable {
+        override fun run() = ManageConfigurations.encryptAll()
     }
 }
