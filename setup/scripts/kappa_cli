@@ -7,5 +7,6 @@ if [ -f $ROOT_DIRECTORY/operation/build/lib/operation-1.0.0.jar ]; then
 else
     pushd "${ROOT_DIRECTORY}/operation" > /dev/null
         ./gradlew build
+        bundle install
     popd > /dev/null
 fi
