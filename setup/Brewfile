@@ -1,10 +1,7 @@
 cask 'java'
 cask 'iterm2'
 cask 'textmate'
-cask 'shiftit'
 cask 'flycut'
-cask 'intellij-idea'
-cask 'docker'
 
 brew 'vim'
 brew 'rbenv'

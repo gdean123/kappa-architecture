@@ -1,14 +1,15 @@
 #!/bin/bash
 
-SETUP_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
 main () {
-    pushd $SETUP_DIRECTORY > /dev/null
+    pushd $ROOT_DIRECTORY/setup > /dev/null
         install_homebrew
         install_bash_it
         install_brew_bundle
         install_ruby
         install_vim
+        build_kappa_cli
     popd > /dev/null
 }
 
@@ -29,7 +30,7 @@ install_bash_it () {
         ~/.bash_it/install.sh --silent
 
         cp ~/.bash_profile ~/.bash_profile ~/.bash_profile.bash_it.bak
-        cp $SETUP_DIRECTORY/bash_it/.bash_profile ~/.bash_profile
+        cp $ROOT_DIRECTORY/setup/bash_it/.bash_profile ~/.bash_profile
     fi
 }
 
@@ -40,7 +41,7 @@ install_brew_bundle () {
 install_ruby () {
     xcode-select --install 2>/dev/null
     rbenv install 2.5.0 --skip-existing
-    rbenv local 2.5.0
+    rbenv global 2.5.0
     gem install bundler
 }
 
@@ -50,6 +51,16 @@ install_vim () {
     else
         git clone https://github.com/pivotal/vim-config.git ~/.vim
         ~/.vim/bin/install
+    fi
+}
+
+build_kappa_cli () {
+    if [ -f $ROOT_DIRECTORY/kappa-architecture/operation/build/lib/operation-1.0.0.jar ]; then
+        echo "The kappa command line interface is already built."
+    else
+        pushd "${ROOT_DIRECTORY}/operation" > /dev/null
+            ./gradlew build
+        popd > /dev/null
     fi
 }
 
