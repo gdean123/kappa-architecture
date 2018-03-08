@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -d ~/.vim ]]; then
+    echo "The vim configuration is already setup."
+else
+    git clone https://github.com/pivotal/vim-config.git ~/.vim
+    ~/.vim/bin/install
+fi

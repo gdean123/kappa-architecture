@@ -1,0 +1,6 @@
+#!/bin/bash
+
+xcode-select --install 2>/dev/null
+rbenv install 2.5.0 --skip-existing
+rbenv global 2.5.0
+gem install bundler --conservative

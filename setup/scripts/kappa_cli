@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
+
+if [ -f $ROOT_DIRECTORY/operation/build/lib/operation-1.0.0.jar ]; then
+    echo "The kappa command line interface is already built."
+else
+    pushd "${ROOT_DIRECTORY}/operation" > /dev/null
+        ./gradlew build
+    popd > /dev/null
+fi

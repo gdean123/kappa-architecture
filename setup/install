@@ -1,67 +1,8 @@
 #!/bin/bash
 
-ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+SCRIPTS_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/scripts" && pwd )"
 
-main () {
-    pushd $ROOT_DIRECTORY/setup > /dev/null
-        install_homebrew
-        install_bash_it
-        install_brew_bundle
-        install_ruby
-        install_vim
-        build_kappa_cli
-    popd > /dev/null
-}
-
-install_homebrew () {
-    if [ -x "$(which brew)" ]; then
-        echo "Homebrew is already installed."
-    else
-        echo | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-        brew update
-    fi
-}
-
-install_bash_it () {
-    if [[ -d ~/.bash_it ]]; then
-        echo "Bash it is already installed."
-    else
-        git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-        ~/.bash_it/install.sh --silent
-
-        cp ~/.bash_profile ~/.bash_profile ~/.bash_profile.bash_it.bak
-        cp $ROOT_DIRECTORY/setup/bash_it/.bash_profile ~/.bash_profile
-    fi
-}
-
-install_brew_bundle () {
-    brew bundle
-}
-
-install_ruby () {
-    xcode-select --install 2>/dev/null
-    rbenv install 2.5.0 --skip-existing
-    rbenv global 2.5.0
-    gem install bundler
-}
-
-install_vim () {
-    if [[ -d ~/.vim ]]; then
-        echo "The vim configuration is already setup."
-    else
-        git clone https://github.com/pivotal/vim-config.git ~/.vim
-        ~/.vim/bin/install
-    fi
-}
-
-build_kappa_cli () {
-    if [ -f $ROOT_DIRECTORY/kappa-architecture/operation/build/lib/operation-1.0.0.jar ]; then
-        echo "The kappa command line interface is already built."
-    else
-        pushd "${ROOT_DIRECTORY}/operation" > /dev/null
-            ./gradlew build
-        popd > /dev/null
-    fi
-}
-
-main
+$SCRIPTS_DIRECTORY/homebrew
+$SCRIPTS_DIRECTORY/bash_it
+$SCRIPTS_DIRECTORY/brew_bundle
+$SCRIPTS_DIRECTORY/ruby

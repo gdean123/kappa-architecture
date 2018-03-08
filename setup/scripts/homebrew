@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -x "$(which brew)" ]; then
+    echo "Homebrew is already installed."
+else
+    echo | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew update
+fi
