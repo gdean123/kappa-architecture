@@ -22,23 +22,49 @@ Create a postgres database into which we can materialize a view:
 createdb consumer_development
 ```
 
-## Development
-
-Use the command line interface to operate the application. For example, to launch the producer service:
+Install the private key used to decrypt secrets:
 
 ```
-kappa start producer
+sudo mkdir -p /opt/ejson/keys
+sudo vim /opt/ejson/keys/3563cb1ccbbc1c5adc6f81684e7b85d9d40b0e8cfece2320e04e31af641b624c
+```
+
+## Development
+
+Use the command line interface to operate the application. For example, to run all tests:
+
+```
+kappa test
 ```
 
 ## Startup
 
-In three separate terminals:
+First:
+
+`kappa runtime start` to start zookeeper, kafka, schema-registry, and connect
+
+`kappa topics create` to create the required topics in the local Kafka
+
+`kappa bindings generate` to generate serializers and deserializers from schema files
+
+Then, in separate terminals:
 
 `kappa start producer` to launch the producer application
+
 `kappa start stream-processor` to launch the stream-processor application
+
 `kappa connectors load` to load the jdbc-sink Kafka Connect connector
 
 ## Usage
+
+Notice that the word_counts table doesn't even exist:
+
+```
+$ psql consumer_development
+
+consumer_development=# SELECT * FROM word_counts;
+ERROR:  relation "word_counts" does not exist
+```
 
 Use the producer to write a few sentences to the sentence_created kafka topic:
 
@@ -52,7 +78,7 @@ The stream-processor is listening to that topic and will write an updated set of
 The jdbc-sink connector is listening to word_counts and will materialize that into a table in the consumer_development database.
 
 ```
-psql consumer_development
+$ psql consumer_development
 
 consumer_development=# SELECT * FROM word_counts;
  count |  word
