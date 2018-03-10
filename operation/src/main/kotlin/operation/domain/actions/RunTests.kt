@@ -1,12 +1,10 @@
 package operation.domain.actions
 
+import operation.support.Environment
 import operation.support.Paths
 import operation.tools.Gradle
 
 object RunTests {
-    fun producer() {
-        Gradle.test(Paths.producer(), mapOf(
-            "KAFKA_URL" to "http://localhost:9092"
-        ))
-    }
+    fun producer() = Gradle.test(Paths.producer(), Environment.read("producer", "test", "application"))
+    fun consumer() = Gradle.test(Paths.consumer(), Environment.read("consumer", "test", "application"))
 }

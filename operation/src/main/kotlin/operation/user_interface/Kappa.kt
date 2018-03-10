@@ -9,8 +9,8 @@ import picocli.CommandLine.Command
     header = ["%nkappa command line interface%n"],
     subcommands = [
         Kappa.Build::class,
-        Kappa.Test::class,
         Start::class,
+        Test::class,
         Topics::class,
         Connectors::class,
         Runtime::class,
@@ -22,10 +22,5 @@ class Kappa: Group() {
     @Command(name = "build", description = ["Build all artifacts"])
     class Build : Runnable {
         override fun run() = BuildArtifact.all()
-    }
-
-    @Command(name = "test", description = ["Run all tests"])
-    class Test : Runnable {
-        override fun run() = RunTests.producer()
     }
 }

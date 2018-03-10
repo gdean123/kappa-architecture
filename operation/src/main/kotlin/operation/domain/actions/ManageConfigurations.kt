@@ -10,9 +10,12 @@ import java.io.File
 
 object ManageConfigurations {
     fun showAll() {
-        configurations().forEach { configuration ->
-            Log.info("${configuration.application} / ${configuration.environment} / ${configuration.target}")
-            configuration.environmentVariables.forEach { (key, value) -> println("$key = $value") }
+        configurations().forEach { (application, environment, target) ->
+            Log.info("$application / $environment / $target")
+
+            val environmentVariables = Environment.read(application, environment, target)
+            environmentVariables.forEach { (key, value) -> println("$key = $value") }
+
             Log.newline()
         }
     }
@@ -37,9 +40,8 @@ object ManageConfigurations {
                 filenames.map { filename ->
                     val target = FilenameUtils.removeExtension(filename)
                     val file = File(File(File(Paths.configuration(), application), environment), filename)
-                    val environmentVariables = Environment.read(application, environment, target)
 
-                    Configuration(application, environment, target, file, environmentVariables)
+                    Configuration(application, environment, target, file)
                 }
             }
         }
