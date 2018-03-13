@@ -1,25 +1,25 @@
 package com.kappa.producer.kafka
 
+import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
+import io.confluent.kafka.serializers.KafkaAvroDeserializer
+import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig
 import org.apache.kafka.clients.consumer.ConsumerConfig
-import org.apache.kafka.common.serialization.IntegerDeserializer
-import org.apache.kafka.common.serialization.StringDeserializer
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.KafkaMessageListenerContainer
 import org.springframework.kafka.listener.MessageListener
 import org.springframework.kafka.listener.config.ContainerProperties
 import org.springframework.stereotype.Component
-
 import java.io.Closeable
-import java.util.HashMap
 
 @Component
 class KafkaTopicListener(
-    @Value("\${kafka.url}") private val kafkaUrl: String
-) : TopicListener, Closeable {
+    @Value("\${kafka.url}") private val kafkaUrl: String,
+    @Value("\${kafka.schemaRegistryUrl}") private val schemaRegistryUrl: String
+) : Closeable {
     private var container: KafkaMessageListenerContainer<Int, String>? = null
 
-    override fun listen(topic: String, messageListener: MessageListener<Int, String>) {
+    fun <K, V> listen(topic: String, messageListener: MessageListener<K, V>) {
         val containerProperties = ContainerProperties(topic)
         containerProperties.messageListener = messageListener
         container = createContainer(containerProperties, kafkaUrl)
@@ -33,17 +33,17 @@ class KafkaTopicListener(
         return KafkaMessageListenerContainer(consumerFactory, containerProperties)
     }
 
-    private fun consumerProperties(kafkaUrl: String): Map<String, Any> {
-        val properties = HashMap<String, Any>()
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl)
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, "some-group")
-        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true)
-        properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100")
-        properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000")
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer::class.java)
-        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer::class.java)
-        return properties
-    }
+    private fun consumerProperties(kafkaUrl: String) = mapOf(
+        ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaUrl,
+        ConsumerConfig.GROUP_ID_CONFIG to "some-group",
+        ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG to true,
+        ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG to "100",
+        ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG to "15000",
+        ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to KafkaAvroDeserializer::class.java,
+        ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to KafkaAvroDeserializer::class.java,
+        AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG to schemaRegistryUrl,
+        KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG to true
+    )
 
     override fun close() {
         container!!.stop()

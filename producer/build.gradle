@@ -42,12 +42,11 @@ sourceSets {
 }
 
 dependencies {
-	compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}"
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
 	compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
 	compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 	compile 'org.springframework.boot:spring-boot-starter'
 	compile 'org.springframework.kafka:spring-kafka:1.2.2.RELEASE'
-	compile 'log4j:log4j:1.2.17'
 	compile 'javax.inject:javax.inject:1'
 	compile 'com.google.guava:guava:22.0'
 	compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0'

@@ -7,40 +7,33 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
-import producer.SentenceCreatedKey
-import producer.SentenceCreatedValue
-
-import java.util.HashMap
 
 @Component
 class KafkaTopicWriter(
     @Value("\${kafka.url}") private val kafkaUrl: String,
     @Value("\${kafka.schemaRegistryUrl}") private val schemaRegistryUrl: String
-) : TopicWriter {
-
-    override fun write(topic: String, key: SentenceCreatedKey, value: SentenceCreatedValue) {
-        val template = createTemplate(kafkaUrl)
+) {
+    fun <K, V> write(topic: String, key: K, value: V) {
+        val template = createTemplate<K, V>(kafkaUrl)
         template.defaultTopic = topic
         template.sendDefault(key, value)
         template.flush()
     }
 
-    private fun createTemplate(kafkaUrl: String): KafkaTemplate<SentenceCreatedKey, SentenceCreatedValue> {
+    private fun <K, V> createTemplate(kafkaUrl: String): KafkaTemplate<K, V> {
         val senderProperties = senderProperties(kafkaUrl)
-        val producerFactory = DefaultKafkaProducerFactory<SentenceCreatedKey, SentenceCreatedValue>(senderProperties)
+        val producerFactory = DefaultKafkaProducerFactory<K, V>(senderProperties)
         return KafkaTemplate(producerFactory)
     }
 
-    private fun senderProperties(kafkaUrl: String): Map<String, Any> {
-        val properties = HashMap<String, Any>()
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl)
-        properties.put(ProducerConfig.RETRIES_CONFIG, 0)
-        properties.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384)
-        properties.put(ProducerConfig.LINGER_MS_CONFIG, 1)
-        properties.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432)
-        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer::class.java)
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer::class.java)
-        properties.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl)
-        return properties
-    }
+    private fun senderProperties(kafkaUrl: String): Map<String, Any> = mapOf(
+        ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaUrl,
+        ProducerConfig.RETRIES_CONFIG to 0,
+        ProducerConfig.BATCH_SIZE_CONFIG to 16384,
+        ProducerConfig.LINGER_MS_CONFIG to 1,
+        ProducerConfig.BUFFER_MEMORY_CONFIG to 33554432,
+        ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to KafkaAvroSerializer::class.java,
+        ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to KafkaAvroSerializer::class.java,
+        AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG to schemaRegistryUrl
+    )
 }
