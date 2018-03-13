@@ -63,6 +63,8 @@ dependencies {
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	testCompile "org.springframework.kafka:spring-kafka-test:$springKafkaVersion"
 	testCompile 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
+    testCompile "org.apache.kafka:kafka-streams:$kafkaVersion:test"
+    testCompile "org.apache.kafka:kafka-clients:$kafkaVersion:test"
 }
 
 test {

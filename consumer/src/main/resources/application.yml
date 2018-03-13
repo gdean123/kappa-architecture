@@ -3,7 +3,5 @@ server:
 application:
   id: ${APPLICATION_ID}
 kafka:
-  enableViewMaterialization: ${ENABLE_VIEW_MATERIALIZATION}
-  url: ${spring.embedded.kafka.brokers} # ${KAFKA_URL}
-  bootstrap-servers: ${spring.embedded.kafka.brokers}
+  url: ${KAFKA_URL}
   schemaRegistryUrl: ${SCHEMA_REGISTRY_URL}
