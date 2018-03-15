@@ -11,16 +11,17 @@ fun main(arguments: Array<String>) {
         val source = streamBuilder.stream<SentenceCreatedKey, SentenceCreatedValue>("sentence_created")
 
         val counts = source
-            .flatMapValues { line -> split(line) }
-            .map { _, word -> KeyValue(WordCountKey(word), word) }
-            .groupByKey(Serialized.with(serializers.key(), serializers.string()))
+            .peek { key, value -> println("Processing $key: $value") }
+            .flatMapValues { sentenceCreatedValue -> split(sentenceCreatedValue.getSentence()) }
+            .groupBy({ _, value -> value }, Serialized.with(serializers.string(), serializers.string()))
             .count()
             .toStream()
-            .map { wordCountKey, count -> KeyValue(wordCountKey, WordCountValue(wordCountKey.getWord(), count)) }
+            .map { word, count -> KeyValue(WordCountKey(word), WordCountValue(word, count)) }
+            .peek { key, value -> println("Emitting $key: $value") }
 
         counts.to("word_counts")
     }
 }
 
-private fun split(value: SentenceCreatedValue) =
-    Arrays.asList(*value.getSentence().toLowerCase(Locale.getDefault()).split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+private fun split(sentence: String) =
+    Arrays.asList(*sentence.toLowerCase(Locale.getDefault()).split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
