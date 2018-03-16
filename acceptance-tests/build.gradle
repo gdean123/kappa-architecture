@@ -37,3 +37,10 @@ compileTestKotlin {
         jvmTarget = "1.8"
     }
 }
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
+        events "passed", "skipped", "failed"
+    }
+}

@@ -18,6 +18,8 @@ object Paths {
     fun consumerContracts() = path("consumer/contracts")
     fun consumerGen() = path("consumer/src/gen/java")
 
+    fun acceptanceTests() = path("acceptance-tests")
+
     private fun path(path: String) = File(root(), path)
     private fun jarFile() = File(this::class.java.protectionDomain.codeSource.location.toURI().path)
 }

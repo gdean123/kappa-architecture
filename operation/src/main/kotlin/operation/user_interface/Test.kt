@@ -1,13 +1,12 @@
 package operation.user_interface
 
 import operation.domain.actions.RunTests
-import operation.domain.actions.StartService
 import picocli.CommandLine
 
 @CommandLine.Command(
     name = "test",
     description = ["Run tests"],
-    subcommands = [Test.Producer::class, Test.StreamProcessor::class, Test.Consumer::class]
+    subcommands = [Test.Producer::class, Test.StreamProcessor::class, Test.Consumer::class, Test.Acceptance::class]
 )
 class Test : Group() {
     @CommandLine.Command(name = "producer", description = ["Run the producer tests"])
@@ -23,5 +22,10 @@ class Test : Group() {
     @CommandLine.Command(name = "consumer", description = ["Run the consumer tests"])
     class Consumer: Runnable {
         override fun run() = RunTests.consumer()
+    }
+
+    @CommandLine.Command(name = "acceptance", description = ["Run the acceptance tests"])
+    class Acceptance: Runnable {
+        override fun run() = RunTests.acceptance()
     }
 }
