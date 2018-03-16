@@ -1,0 +1,5 @@
+application:
+  id: ${APPLICATION_ID}
+kafka:
+  url: ${KAFKA_URL}
+  schemaRegistryUrl: ${SCHEMA_REGISTRY_URL}

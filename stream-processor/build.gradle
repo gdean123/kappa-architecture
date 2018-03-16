@@ -1,35 +1,41 @@
-apply plugin: 'kotlin'
-apply plugin: 'idea'
-apply plugin: 'application'
-
-mainClassName = 'stream_processor.MainKt'
-libsDirName = 'lib'
-
 buildscript {
     ext {
-        kotlinVersion = '1.2.21'
-        kafkaVersion = '1.0.0'
-        slf4jVersion = '1.7.6'
+		springBootVersion = '1.5.6.RELEASE'
+		springKafkaVersion = '2.1.4.RELEASE'
+		kotlinVersion = '1.2.30'
+		kafkaVersion = '1.0.0'
 	}
 
 	repositories {
 		mavenCentral()
-        jcenter()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
 	}
 
 	dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+		classpath "org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}"
     }
 }
 
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
+
+version = '1.0.0'
 sourceCompatibility = 1.8
-version = ext.kafkaVersion
+
+repositories {
+	mavenCentral()
+	maven {
+		url 'https://packages.confluent.io/maven/'
+	}
+}
 
 compileKotlin {
 	kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions {
+        languageVersion = "1.2"
+    }
 }
 
 compileTestKotlin {
@@ -37,33 +43,24 @@ compileTestKotlin {
 }
 
 sourceSets {
-    main.java.srcDirs += "$rootDir/src/gen/java"
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
-    maven {
-        url 'https://packages.confluent.io/maven/'
-    }
+	main.java.srcDirs += "$rootDir/src/gen/java"
 }
 
 dependencies {
-    compile "org.apache.kafka:connect-runtime:$kafkaVersion"
-    compile "org.apache.kafka:connect-api:$kafkaVersion"
-    compile "org.apache.kafka:kafka-streams:$kafkaVersion"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-    compile "org.apache.avro:avro:1.8.2"
-    compile "io.confluent:kafka-streams-avro-serde:4.0.0"
-}
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+	compile "org.apache.kafka:kafka-streams:$kafkaVersion"
+	compile 'org.springframework.boot:spring-boot-starter'
+	compile "org.springframework.kafka:spring-kafka:$springKafkaVersion"
+	compile 'log4j:log4j:1.2.17'
+	compile 'javax.inject:javax.inject:1'
+	compile "org.apache.avro:avro:1.8.2"
+	compile "io.confluent:kafka-streams-avro-serde:4.0.0"
 
-jar {
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	testCompile "org.springframework.kafka:spring-kafka-test:$springKafkaVersion"
+	testCompile "org.apache.kafka:kafka-streams:$kafkaVersion:test"
+	testCompile "org.apache.kafka:kafka-clients:$kafkaVersion:test"
 }
 
 test {
