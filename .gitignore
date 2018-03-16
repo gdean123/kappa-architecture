@@ -21,4 +21,7 @@
 /consumer/out/
 /consumer/src/gen/
 
+/acceptance-tests/out
+/acceptance-tests/build
+
 /runtime/
