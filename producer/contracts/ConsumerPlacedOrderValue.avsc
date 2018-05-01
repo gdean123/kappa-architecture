@@ -1,0 +1,14 @@
+{
+    "namespace": "producer",
+    "type": "record",
+    "name": "ConsumerPlacedOrderValue",
+    "fields": [
+        {
+            "name": "cost",
+            "type": "bytes",
+            "logicalType": "decimal",
+            "precision": 10,
+            "scale": 2
+        }
+    ]
+}

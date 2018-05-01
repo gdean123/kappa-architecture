@@ -12,6 +12,7 @@ object ManageTopics {
     fun create() {
         KafkaTopics.create("sentence_created")
         KafkaTopics.create("word_counts")
+        KafkaTopics.create("consumer_placed_order")
     }
 
     fun destroy() {
@@ -19,6 +20,7 @@ object ManageTopics {
         KafkaTopics.delete("sentence_created-KSTREAM-AGGREGATE-STATE-STORE-0000000003-changelog")
         KafkaTopics.delete("sentence_created-KSTREAM-AGGREGATE-STATE-STORE-0000000003-repartition")
         KafkaTopics.delete("word_counts")
+        KafkaTopics.delete("consumer_placed_order")
     }
 
     fun publish() {

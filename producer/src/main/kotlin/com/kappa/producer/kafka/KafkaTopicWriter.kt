@@ -2,6 +2,7 @@ package com.kappa.producer.kafka
 
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig
 import io.confluent.kafka.serializers.KafkaAvroSerializer
+import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.DefaultKafkaProducerFactory
@@ -13,7 +14,7 @@ class KafkaTopicWriter(
     @Value("\${kafka.url}") private val kafkaUrl: String,
     @Value("\${kafka.schemaRegistryUrl}") private val schemaRegistryUrl: String
 ) {
-    fun <K, V> write(topic: String, key: K, value: V) {
+    fun <K: SpecificRecord, V: SpecificRecord> write(topic: String, key: K, value: V) {
         val template = createTemplate<K, V>(kafkaUrl)
         template.defaultTopic = topic
         template.sendDefault(key, value)
