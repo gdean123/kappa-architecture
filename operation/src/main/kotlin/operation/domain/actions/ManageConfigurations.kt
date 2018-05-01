@@ -14,7 +14,7 @@ object ManageConfigurations {
             Log.info("$application / $environment / $target")
 
             val environmentVariables = Environment.read(application, environment, target)
-            environmentVariables.forEach { (key, value) -> println("$key = $value") }
+            environmentVariables.forEach { (key, value) -> println("$key=$value") }
 
             Log.newline()
         }
