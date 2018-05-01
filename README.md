@@ -53,6 +53,8 @@ Then, in separate terminals:
 
 `kappa start stream-processor` to launch the stream-processor application
 
+`kappa start consumer` to launch the consumer application
+
 `kappa connectors load` to load the jdbc-sink Kafka Connect connector
 
 ## Usage
@@ -90,4 +92,7 @@ consumer_development=# SELECT * FROM word_counts;
 (4 rows)
 ```
 
+Independently, the consumer is listening to word_counts and materializing its own view using RocksDB:
 
+curl localhost:8181/word_counts/alpine
+{"word":"alpine","count":1}
