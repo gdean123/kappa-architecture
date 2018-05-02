@@ -1,0 +1,14 @@
+{
+    "namespace": "stream_processor",
+    "type": "record",
+    "name": "ConsumerBalanceValue",
+    "fields": [
+        {
+            "name": "balance",
+            "type": "bytes",
+            "logicalType": "decimal",
+            "precision": 10,
+            "scale": 2
+        }
+    ]
+}

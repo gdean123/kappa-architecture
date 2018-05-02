@@ -1,0 +1,11 @@
+{
+    "namespace": "stream_processor",
+    "type": "record",
+    "name": "ConsumerBalanceKey",
+    "fields": [
+        {
+            "name": "user_id",
+            "type": "string"
+        }
+    ]
+}

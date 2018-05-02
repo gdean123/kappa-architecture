@@ -1,0 +1,11 @@
+{
+    "namespace": "producer",
+    "type": "record",
+    "name": "ConsumerPlacedOrderKey",
+    "fields": [
+        {
+            "name": "id",
+            "type": "string"
+        }
+    ]
+}

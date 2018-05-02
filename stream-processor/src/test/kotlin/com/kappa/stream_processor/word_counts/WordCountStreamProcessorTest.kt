@@ -9,13 +9,13 @@ import producer.SentenceCreatedValue
 import stream_processor.WordCountKey
 import stream_processor.WordCountValue
 
-class StreamProcessorTest : StreamTestBase() {
-    override fun stream(streamBuilder: StreamsBuilder) = StreamProcessor(streamBuilder).stream()
+class WordCountStreamProcessorTest : StreamTestBase() {
+    override fun stream(streamBuilder: StreamsBuilder) = WordCountStreamProcessor(streamBuilder).stream()
 
     @Test
     fun `#stream computes word counts`() {
-        emit("sentence_created", SentenceCreatedKey("first-id"), SentenceCreatedValue("rainbows and sunshine"))
-        emit("sentence_created", SentenceCreatedKey("second-id"), SentenceCreatedValue("alpine rainbows"))
+        emit("sentence_created", SentenceCreatedKey("first-id") to SentenceCreatedValue("rainbows and sunshine"))
+        emit("sentence_created", SentenceCreatedKey("second-id") to SentenceCreatedValue("alpine rainbows"))
 
         assertThat(all<WordCountKey, WordCountValue>(5, "word_counts")).isEqualTo(arrayOf(
             WordCountKey("rainbows") to WordCountValue("rainbows", 1),

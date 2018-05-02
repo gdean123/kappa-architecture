@@ -10,8 +10,6 @@ import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.Topology
 import org.apache.kafka.test.ProcessorTopologyTestDriver
 import org.junit.Before
-import producer.SentenceCreatedKey
-import producer.SentenceCreatedValue
 
 abstract class StreamTestBase {
     private lateinit var driver: ProcessorTopologyTestDriver
@@ -25,8 +23,8 @@ abstract class StreamTestBase {
 
     protected fun <K: SpecificRecord, V: SpecificRecord> all(n: Int, topic: String) = Array(n, { next<K, V>(topic) })
 
-    protected fun emit(topic: String, key: SentenceCreatedKey, value: SentenceCreatedValue) {
-        driver.process(topic, key, value, serializer(true), serializer(false))
+    protected fun emit(topic: String, keyValuePair: Pair<SpecificRecord, SpecificRecord>) {
+        driver.process(topic, keyValuePair.first, keyValuePair.second, serializer(true), serializer(false))
     }
 
     private fun topology(): Topology? {

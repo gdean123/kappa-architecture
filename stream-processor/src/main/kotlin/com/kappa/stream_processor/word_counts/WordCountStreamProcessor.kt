@@ -13,7 +13,7 @@ import java.util.*
 import javax.annotation.PostConstruct
 
 @Component
-class StreamProcessor(
+class WordCountStreamProcessor(
     private val streamBuilder: StreamsBuilder
 ) {
     @PostConstruct
