@@ -1,5 +1,11 @@
-application:
-  id: ${APPLICATION_ID}
-kafka:
-  url: ${KAFKA_URL}
+spring:
+  application:
+    name: ${APPLICATION_ID}
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+    controlled:
+      shutdown:
+        enable: true
+confluent:
   schemaRegistryUrl: ${SCHEMA_REGISTRY_URL}

@@ -28,10 +28,11 @@ class KafkaClientTest: KafkaTestBase() {
     fun `listener returns written values`() {
         val latch = CountDownLatch(2)
         val receivedMessages = ArrayList<SentenceCreatedValue>()
-        topicListener.listen("values-topic", MessageListener<SentenceCreatedKey, SentenceCreatedValue>({ message ->
+
+        topicListener.listen("values-topic", MessageListener<SentenceCreatedKey, SentenceCreatedValue> { message ->
             receivedMessages.add(message.value())
             latch.countDown()
-        }))
+        })
 
         topicWriter.write("values-topic", SentenceCreatedKey("first-id"), SentenceCreatedValue("first-content"))
         topicWriter.write("values-topic", SentenceCreatedKey("second-id"), SentenceCreatedValue("second-content"))

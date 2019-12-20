@@ -20,9 +20,9 @@ class BalanceStreamProcessorTest : StreamTestBase() {
     }
 
     @Test
-    fun `#stream computes word counts`() {
-        emit("consumer_placed_order", ConsumerPlacedOrderKey("first-id") to ConsumerPlacedOrderValue(twentyTwoFiftyFive()))
-        emit("consumer_placed_order", ConsumerPlacedOrderKey("second-id") to ConsumerPlacedOrderValue(fiftyFiveThirtyThree()))
+    fun `#stream computes running balances`() {
+        emit("consumer_placed_order", ConsumerPlacedOrderKey("first-id"), ConsumerPlacedOrderValue(twentyTwoFiftyFive()))
+        emit("consumer_placed_order", ConsumerPlacedOrderKey("second-id"), ConsumerPlacedOrderValue(fiftyFiveThirtyThree()))
 
         assertThat(all<ConsumerBalanceKey, ConsumerBalanceValue>(2, "consumer_balances")).isEqualTo(arrayOf(
             ConsumerBalanceKey("unknown-user-id") to ConsumerBalanceValue(twentyTwoFiftyFive()),

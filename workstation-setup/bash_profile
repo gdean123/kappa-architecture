@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+export PATH=$PATH:$JAVA_HOME/bin
+export PATH=$PATH:$ROOT_DIRECTORY/runtime/bin
+export PATH=$PATH:$ROOT_DIRECTORY/operation/bin
+
+eval "$(rbenv init -)"

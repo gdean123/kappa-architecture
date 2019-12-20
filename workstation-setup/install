@@ -3,6 +3,9 @@
 SCRIPTS_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/scripts" && pwd )"
 
 $SCRIPTS_DIRECTORY/homebrew
-$SCRIPTS_DIRECTORY/bash_it
+$SCRIPTS_DIRECTORY/link_bash_profile
 $SCRIPTS_DIRECTORY/brew_bundle
 $SCRIPTS_DIRECTORY/ruby
+$SCRIPTS_DIRECTORY/confluent_cli
+$SCRIPTS_DIRECTORY/kappa_cli
+$SCRIPTS_DIRECTORY/generate_avro_bindings

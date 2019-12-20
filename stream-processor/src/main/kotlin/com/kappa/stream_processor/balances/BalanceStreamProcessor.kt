@@ -22,7 +22,7 @@ class BalanceStreamProcessor(
         val balance = source
             .peek { key, value -> println("Processing $key: $value") }
             .map { _, consumerPlacedOrderValue -> KeyValue(ConsumerBalanceKey("unknown-user-id"), ConsumerBalanceValue(consumerPlacedOrderValue.getCost())) }
-            .groupBy({ consumerBalanceKey, _ -> consumerBalanceKey })
+            .groupBy { consumerBalanceKey, _ -> consumerBalanceKey }
             .reduce { consumerBalanceValue, consumerBalanceAccumulator -> sum(consumerBalanceValue, consumerBalanceAccumulator) }
             .toStream()
             .peek { key, value -> println("Emitting $key: $value") }

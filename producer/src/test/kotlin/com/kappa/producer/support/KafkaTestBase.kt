@@ -1,23 +1,22 @@
 package com.kappa.producer.support
 
-import org.junit.After
+import org.apache.kafka.clients.admin.NewTopic
 import org.junit.Before
-import org.springframework.kafka.test.rule.KafkaEmbedded
+import org.junit.ClassRule
+import org.springframework.kafka.test.rule.EmbeddedKafkaRule
 
 abstract class KafkaTestBase {
-    private lateinit var embeddedKafka: KafkaEmbedded
     protected abstract fun topic(): String
+
+    companion object {
+        @ClassRule @JvmField
+        var embeddedKafkaRule = EmbeddedKafkaRule(1, true, 5)
+    }
 
     @Before
     fun kafkaTestBaseSetUp() {
-        embeddedKafka = KafkaEmbedded(1, true, topic())
-        embeddedKafka.before()
+        embeddedKafkaRule.embeddedKafka.addTopics(NewTopic(topic(), 15, 1.toShort()))
     }
 
-    protected fun kafkaUrl(): String = embeddedKafka.brokersAsString
-
-    @After
-    fun kafkaTestBaseTearDown() {
-        embeddedKafka.after()
-    }
+    protected fun kafkaUrl(): String = embeddedKafkaRule.embeddedKafka.brokersAsString
 }

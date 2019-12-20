@@ -14,8 +14,8 @@ class WordCountStreamProcessorTest : StreamTestBase() {
 
     @Test
     fun `#stream computes word counts`() {
-        emit("sentence_created", SentenceCreatedKey("first-id") to SentenceCreatedValue("rainbows and sunshine"))
-        emit("sentence_created", SentenceCreatedKey("second-id") to SentenceCreatedValue("alpine rainbows"))
+        emit("sentence_created", SentenceCreatedKey("first-id"), SentenceCreatedValue("rainbows and sunshine"))
+        emit("sentence_created", SentenceCreatedKey("second-id"), SentenceCreatedValue("alpine rainbows"))
 
         assertThat(all<WordCountKey, WordCountValue>(5, "word_counts")).isEqualTo(arrayOf(
             WordCountKey("rainbows") to WordCountValue("rainbows", 1),

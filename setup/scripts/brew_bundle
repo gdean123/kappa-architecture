@@ -1,8 +1,0 @@
-#!/bin/bash
-
-SETUP_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-
-pushd $SETUP_DIRECTORY > /dev/null
-    brew bundle
-popd > /dev/null
-

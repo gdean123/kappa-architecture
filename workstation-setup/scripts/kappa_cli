@@ -8,5 +8,6 @@ else
     pushd "${ROOT_DIRECTORY}/operation" > /dev/null
         ./gradlew build
         bundle install
+        rbenv rehash
     popd > /dev/null
 fi

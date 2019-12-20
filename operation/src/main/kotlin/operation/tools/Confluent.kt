@@ -4,12 +4,16 @@ import operation.support.Paths
 import operation.support.Shell
 
 object Confluent {
-    fun start() = Shell.execute("confluent start")
+    fun start() = confluent("local start")
 
-    fun destroy() = Shell.execute("confluent destroy")
+    fun destroy() = confluent("local destroy")
 
-    fun unload(connector: String) = Shell.execute("confluent unload $connector")
+    fun unload(connector: String) = confluent("local unload $connector")
 
     fun load(connector: String, configurationFile: String) =
-        Shell.execute("confluent load $connector -d ${Paths.root()}/$configurationFile")
+        confluent("local load $connector -d ${Paths.root()}/$configurationFile")
+
+    private fun confluent(command: String) = Shell.execute(
+        "confluent $command", Paths.root(),
+        mapOf("CONFLUENT_HOME" to Paths.runtime().absolutePath))
 }

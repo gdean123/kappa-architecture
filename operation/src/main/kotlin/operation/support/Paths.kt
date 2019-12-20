@@ -5,6 +5,7 @@ import java.io.File
 object Paths {
     fun root(): File = jarFile().parentFile.parentFile.parentFile.parentFile
     fun configuration() = path("configuration")
+    fun runtime() = path("runtime")
 
     fun producer() = path("producer")
     fun producerContracts() = path("producer/contracts")

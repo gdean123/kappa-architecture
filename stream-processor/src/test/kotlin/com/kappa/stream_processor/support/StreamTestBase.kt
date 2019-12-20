@@ -8,26 +8,29 @@ import org.apache.kafka.common.serialization.Deserializer
 import org.apache.kafka.common.serialization.Serializer
 import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.Topology
-import org.apache.kafka.test.ProcessorTopologyTestDriver
+import org.apache.kafka.streams.TopologyTestDriver
+import org.apache.kafka.streams.test.ConsumerRecordFactory
 import org.junit.Before
 
 abstract class StreamTestBase {
-    private lateinit var driver: ProcessorTopologyTestDriver
+    private lateinit var driver: TopologyTestDriver
     protected abstract fun stream(streamBuilder: StreamsBuilder)
 
     @Before
     fun streamTestBaseSetUp() {
-        val configuration = KafkaStreamsConfiguration("http://some-host:1234", "http://localhost:8081", "some-application-id")
-        driver = ProcessorTopologyTestDriver(configuration.streamsConfiguration(), topology())
+        val configuration = KafkaStreamsConfiguration("http://localhost:8081", "some-application-id")
+        driver = TopologyTestDriver(kafkaStreamsTopology(), configuration.streamsConfiguration(emptyList()))
     }
 
-    protected fun <K: SpecificRecord, V: SpecificRecord> all(n: Int, topic: String) = Array(n, { next<K, V>(topic) })
+    protected fun <K: SpecificRecord, V: SpecificRecord> all(n: Int, topic: String) =
+        Array(n) { next<K, V>(topic) }
 
-    protected fun emit(topic: String, keyValuePair: Pair<SpecificRecord, SpecificRecord>) {
-        driver.process(topic, keyValuePair.first, keyValuePair.second, serializer(true), serializer(false))
+    protected fun <K: SpecificRecord, V: SpecificRecord> emit(topic: String, key: K, value: V) {
+        val factory = ConsumerRecordFactory<K, V>(topic, serializer(true), serializer(false))
+        driver.pipeInput(factory.create(key, value))
     }
 
-    private fun topology(): Topology? {
+    private fun kafkaStreamsTopology(): Topology? {
         val streamBuilder = StreamsBuilder()
         stream(streamBuilder)
         return streamBuilder.build()

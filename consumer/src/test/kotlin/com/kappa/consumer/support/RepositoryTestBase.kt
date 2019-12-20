@@ -7,28 +7,26 @@ import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.common.serialization.Serializer
 import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.Topology
-import org.apache.kafka.test.ProcessorTopologyTestDriver
+import org.apache.kafka.streams.TopologyTestDriver
+import org.apache.kafka.streams.kstream.Materialized
+import org.apache.kafka.streams.test.ConsumerRecordFactory
 import org.junit.Before
 import stream_processor.WordCountKey
 import stream_processor.WordCountValue
 
+
 abstract class RepositoryTestBase {
-    protected lateinit var driver: ProcessorTopologyTestDriver
+    protected lateinit var driver: TopologyTestDriver
 
     @Before
     fun repositoryTestBaseSetUp() {
-        val configuration = KafkaStreamsConfiguration("http://some-host:1234", "http://localhost:8081", "some-application-id")
-        driver = ProcessorTopologyTestDriver(configuration.streamsConfiguration(), topology(configuration))
+        val configuration = KafkaStreamsConfiguration("http://localhost:8081", "some-application-id")
+        driver = TopologyTestDriver(kafkaStreamsTopology(), configuration.streamsConfiguration(listOf("http://localhost:9092")))
     }
 
     protected fun emit(topic: String, key: WordCountKey, value: WordCountValue) {
-        driver.process(topic, key, value, serializer(true), serializer(false))
-    }
-
-    private fun topology(kafkaStreamsConfiguration: KafkaStreamsConfiguration): Topology {
-        val streamBuilder = StreamsBuilder()
-        kafkaStreamsConfiguration.sink(streamBuilder)
-        return streamBuilder.build()
+        val factory = ConsumerRecordFactory<WordCountKey, WordCountValue>(topic, serializer(true), serializer(false))
+        driver.pipeInput(factory.create(key, value))
     }
 
     private fun <T: SpecificRecord> serializer(isKey: Boolean): Serializer<T> {
@@ -40,5 +38,11 @@ abstract class RepositoryTestBase {
 
         serde.configure(properties, isKey)
         return serde.serializer()
+    }
+
+    private fun kafkaStreamsTopology(): Topology {
+        val streamsBuilder = StreamsBuilder()
+        streamsBuilder.table<WordCountKey, WordCountValue>("word_counts", Materialized.`as`("word_counts"))
+        return streamsBuilder.build()
     }
 }

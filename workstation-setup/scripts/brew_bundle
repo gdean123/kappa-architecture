@@ -1,0 +1,8 @@
+#!/bin/bash
+
+WORKSTATION_SETUP_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+pushd $WORKSTATION_SETUP_DIRECTORY > /dev/null
+    brew bundle
+popd > /dev/null
+

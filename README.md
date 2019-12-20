@@ -6,14 +6,15 @@ An experiment using immutable event logs, stream processors, and materialized vi
 Download confluent platform from `https://www.confluent.io/download` and move it into this directory:
 
 ```
-tar -xvf ~/Downloads/confluent-oss-4.0.0-2.11.tar.gz
-mv confluent-4.0.0 ~/workspace/kappa-architecture/runtime
+tar -xvf ~/Downloads/confluent-5.3.1-2.12.tar.gz
+mv confluent-5.3.1 ~/workspace/kappa-architecture/runtime
 ```
 
 Use the workstation setup script to install the required dependencies (including the kappa command line interface):
 
 ```
-./setup/install
+./workstation-setup/install
+source ~/.bash_profile
 ```
 
 Create a postgres database into which we can materialize a view:
@@ -29,23 +30,15 @@ sudo mkdir -p /opt/ejson/keys
 sudo vim /opt/ejson/keys/3563cb1ccbbc1c5adc6f81684e7b85d9d40b0e8cfece2320e04e31af641b624c
 ```
 
-## Development
-
-Use the command line interface to operate the application. For example, to run all tests:
-
-```
-kappa test
-```
-
 ## Startup
+
+Use the command line interface to operate the application.
 
 First:
 
 `kappa runtime start` to start zookeeper, kafka, schema-registry, and connect
 
 `kappa topics create` to create the required topics in the local Kafka
-
-`kappa bindings generate` to generate serializers and deserializers from schema files
 
 Then, in separate terminals:
 

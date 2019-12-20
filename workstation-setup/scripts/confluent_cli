@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -x "$(which confluent)" ]; then
+    echo "The confluent command line interface is already installed."
+else
+    curl -L https://cnfl.io/cli | sh -s -- -b /usr/local/bin
+fi
+

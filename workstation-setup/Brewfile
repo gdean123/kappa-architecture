@@ -1,6 +1,6 @@
 tap 'caskroom/versions'
 
-cask 'java8'
+cask 'java11'
 cask 'iterm2'
 cask 'textmate'
 cask 'flycut'

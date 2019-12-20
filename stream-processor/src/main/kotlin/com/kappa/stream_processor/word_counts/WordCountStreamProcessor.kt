@@ -10,6 +10,7 @@ import producer.SentenceCreatedValue
 import stream_processor.WordCountKey
 import stream_processor.WordCountValue
 import java.util.*
+import java.util.Arrays.asList
 import javax.annotation.PostConstruct
 
 @Component
@@ -33,5 +34,5 @@ class WordCountStreamProcessor(
     }
 
     private fun split(sentence: String) =
-        Arrays.asList(*sentence.toLowerCase(Locale.getDefault()).split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+        listOf(*sentence.toLowerCase(Locale.getDefault()).split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
 }

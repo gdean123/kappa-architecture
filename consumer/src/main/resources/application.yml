@@ -1,7 +1,10 @@
 server:
   port: ${PORT}
-application:
-  id: ${APPLICATION_ID}
-kafka:
-  url: ${KAFKA_URL}
+spring:
+  application:
+    name: ${APPLICATION_ID}
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+confluent:
   schemaRegistryUrl: ${SCHEMA_REGISTRY_URL}
